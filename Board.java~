@@ -1,0 +1,12 @@
+import java.text.Random;
+
+public class Board{
+
+  public Board(){
+  
+    
+    
+  }
+
+
+}
