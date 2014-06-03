@@ -12,7 +12,7 @@ public class playerDestroyer extends Ship{
   
   public boolean isDead(){
     for(int t = 0; t < length.length; t++){
-       if length[t] == 0;
+       if (length[t] == 0);
          return false;
     }
      return true;

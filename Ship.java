@@ -1,9 +1,13 @@
+import javax.swing.*;
+
 public class Ship{
   
   public int health;
   public int healthCapacity;
   int[] xCoords = null;
   int[] yCoords = null;
+  String name = "";
+  String position = "";
   
   public Ship(int current, int max){
      health = current;
@@ -16,6 +20,10 @@ public class Ship{
         xCoords[c] = 0; yCoords[c] = 0;
      }
   }
+  
+  public void setName(String n){name = n;}
+  
+  public void setPosition(String p){position = p;}
   
   public int getHealth(){return health;}
   
@@ -41,6 +49,9 @@ public class Ship{
        }
     }
     health = h;
+    if(health == 0){
+       JOptionPane.showMessageDialog(null, position+" "+name+" has sunk!");
+    }
   }
   
   public void coords(int[] xcoords, int[] ycoords){

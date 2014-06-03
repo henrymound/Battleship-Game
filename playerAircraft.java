@@ -4,6 +4,8 @@ public class playerAircraft extends Ship{
   
   public playerAircraft(){
      super(5, 5);
+     setPosition("Your");
+     setName("Aircraft Carrier");
   }
   
   public void hit(int where){

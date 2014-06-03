@@ -3,7 +3,8 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,7 +18,7 @@ import javax.swing.Spring;
 import javax.swing.SpringLayout;
 import java.awt.BorderLayout;
 
-public class Layout extends JFrame implements ActionListener{
+public class Battleships extends JFrame implements ActionListener{
 
   JButton fireB = new JButton("Fire!");
   JButton nextB = new JButton("End Turn");
@@ -55,8 +56,10 @@ public class Layout extends JFrame implements ActionListener{
 
 //  JViewport viewport = new JViewport();
 
-  public Layout() {
+  public Battleships() {
+    
     super("Battleships!");
+    
     setSize(875, 375);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -65,7 +68,7 @@ public class Layout extends JFrame implements ActionListener{
     hitBoard.setFont(new Font("Courier", Font.PLAIN, 25));
     opponentTitle.setFont(new Font("Sans Serif", Font.BOLD, 30));
     
-    userInfo.setLayout(new GridLayout(8, 2));
+    userInfo.setLayout(new GridLayout(9, 2));
 
     opponentTitle.setHorizontalAlignment(SwingConstants.CENTER);
     userTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -81,6 +84,13 @@ public class Layout extends JFrame implements ActionListener{
     HorizontalSpacer2.setHorizontalAlignment(SwingConstants.CENTER);
     xCoord.setHorizontalAlignment(SwingConstants.CENTER);
     yCoord.setHorizontalAlignment(SwingConstants.CENTER);
+    opponentDestroyer.setHorizontalAlignment(SwingConstants.CENTER);
+    userDestroyer.setHorizontalAlignment(SwingConstants.CENTER);
+    
+    Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+    int x = (int) ((dimension.getWidth() - getWidth()) / 2);
+    int y = (int) ((dimension.getHeight() - getHeight()) / 2);
+    setLocation(x, y);
     
     userInfo.add(userTitle);
     userInfo.add(opponentTitle);
@@ -89,7 +99,9 @@ public class Layout extends JFrame implements ActionListener{
     userInfo.add(userBattleship);
     userInfo.add(opponentBattleship);    
     userInfo.add(userSubmarine);
-    userInfo.add(opponentSubmarine);    
+    userInfo.add(opponentSubmarine);     
+    userInfo.add(userDestroyer);
+    userInfo.add(opponentDestroyer);    
     userInfo.add(userRowBoat);
     userInfo.add(opponentRowBoat);
     userInfo.add(HorizontalSpacer);
@@ -107,32 +119,28 @@ public class Layout extends JFrame implements ActionListener{
     c.add(userInfo, BorderLayout.CENTER);
     c.add(gameBoard, BorderLayout.WEST);
     gameBoard.setEditable(false);
+    hitBoard.setEditable(false);
 
     fireB.addActionListener(this);
     nextB.addActionListener(this);
     gameBoard.setText(board.boardToText());
     hitBoard.setText(board.hitBoardToText());
-//    System.out.println("printing board");
-//    board.printBoard();
-    System.out.println("printing opponent board");
-    board.printOpponentBoard();
     setVisible(true);
+    board.printOpponentBoard();
   }
 
   public static void main(String args[]) {
-    new Layout();
+    new Battleships();
   }
   
   
   public void actionPerformed(ActionEvent e) { 
     if(e.getSource() == fireB){
-       System.out.print("Fire!");
-       System.out.print(enterX.getText());
-       System.out.println(enterY.getText());
        board.fire(Integer.parseInt(enterX.getText()), Integer.parseInt(enterY.getText()));
        refresh();
     }
-    JOptionPane.showMessageDialog(null, "The Computer Will Now Make a Move");
+    board.computerTurn();
+    refresh();
   } 
   
   public void refresh(){
@@ -150,6 +158,23 @@ public class Layout extends JFrame implements ActionListener{
     opponentSubmarine.setText("Opponent Submarine Life:  " + board.opponentSubmarine.getHealth() + "/" + board.opponentSubmarine.getHealthCapacity());
     opponentDestroyer.setText("Opponent Destroyer Life:  " + board.opponentDestroyer.getHealth() + "/" + board.opponentDestroyer.getHealthCapacity());
     opponentRowBoat.setText("Opponent Row Boat Life:    " + board.opponentRow.getHealth() + "/" + board.opponentRow.getHealthCapacity());
+    
+    if(board.playerAircraft.getHealth() + 
+       board.playerBattleship.getHealth() + 
+       board.playerSubmarine.getHealth() + 
+       board.playerDestroyer.getHealth() + 
+       board.playerRow.getHealth() == 0){
+       JOptionPane.showMessageDialog(null, "You Lose!\nAll your ships have sunk.");
+       System.exit(0);
+    }else if(board.opponentAircraft.getHealth() + 
+       board.opponentBattleship.getHealth() + 
+       board.opponentSubmarine.getHealth() + 
+       board.opponentDestroyer.getHealth() + 
+       board.opponentRow.getHealth() == 0){
+       JOptionPane.showMessageDialog(null, "You Win!\nYou have sunk all your opponents ships.");
+       System.exit(0);
+    }
+    
     
     repaint();
   }

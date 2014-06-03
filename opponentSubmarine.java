@@ -4,6 +4,8 @@ public class opponentSubmarine extends Ship{
   
   public opponentSubmarine(){
      super(3, 3);
+     setPosition("Your opponents");
+     setName("Submarine");
   }
   
   public void hit(int where){

@@ -465,7 +465,6 @@ public class Board{
        hitBoard[x][y] = 'X';
        opponentBoard[x][y] = 'O';
        String errorMessage = "Hit!\n";
-       printOpponentBoard();
        if(opponentAircraft.ifHit(x, y)){
          errorMessage += "You hit an Aircraft Carrier!";
        }else if(opponentBattleship.ifHit(x, y)){
@@ -483,6 +482,36 @@ public class Board{
        hitBoard[x][y] = 'O';
        JOptionPane.showMessageDialog(null, "Miss!");
     }
+  }
+  
+  public void computerTurn(){
+     int x = rand.nextInt(10);
+     int y = rand.nextInt(10);
+     while(board[x][y] == 'O'){
+       x = rand.nextInt(10);
+       y = rand.nextInt(10);
+     }
+     JOptionPane.showMessageDialog(null, "The Computer fired at "+ x +", "+y);
+     
+     if(taken(x, y)){
+       String errorMessage = "Hit!\n";
+       if(playerAircraft.ifHit(x, y)){
+         errorMessage += "Your Aircraft Carrier was hit!";
+       }else if(playerBattleship.ifHit(x, y)){
+         errorMessage += "Your Battleship was hit!";
+       }else if(playerDestroyer.ifHit(x, y)){
+         errorMessage += "Your Destroyer was hit!";
+       }else if(playerRow.ifHit(x, y)){
+         errorMessage += "Your Row Boat was hit!";
+       }else if(playerSubmarine.ifHit(x, y)){
+         errorMessage += "Your Submarine was hit!";
+       }
+       JOptionPane.showMessageDialog(null, errorMessage);
+    }else{
+       JOptionPane.showMessageDialog(null, "Miss!");
+    }
+       board[x][y] = 'O';
+     
   }
 
 }

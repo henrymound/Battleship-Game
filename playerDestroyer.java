@@ -4,6 +4,8 @@ public class playerDestroyer extends Ship{
   
   public playerDestroyer(){
      super(3, 3);
+     setPosition("Your");
+     setName("Destroyer");
   }
   
   public void hit(int where){

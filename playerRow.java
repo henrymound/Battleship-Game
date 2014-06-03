@@ -1,9 +1,11 @@
 public class playerRow extends Ship{
 
   int[] length = {0, 0, 0, 0, 0};
-  
+
   public playerRow(){
      super(2, 2);
+     setPosition("Your");
+     setName("Row Boat");
   }
   
   public void hit(int where){

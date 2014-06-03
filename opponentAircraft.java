@@ -1,9 +1,11 @@
 public class opponentAircraft extends Ship{
 
   int[] length = {0, 0, 0, 0, 0};
-  
+
   public opponentAircraft(){
      super(5, 5);
+     setPosition("Your opponents");
+     setName("Aircraft Carrier");
   }
   
   public void hit(int where){

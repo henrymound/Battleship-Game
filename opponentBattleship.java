@@ -1,9 +1,11 @@
 public class opponentBattleship extends Ship{
 
   int[] length = {0, 0, 0, 0, 0};
-  
+
   public opponentBattleship(){
      super(4, 4);
+     setPosition("Your opponents");
+     setName("Battleship");
   }
   
   public void hit(int where){

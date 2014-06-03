@@ -1,8 +1,8 @@
-public class playerAircraft extends Ship{
+public class opponentAircraft extends Ship{
 
   int[] length = {0, 0, 0, 0, 0};
   
-  public playerAircraft(){
+  public opponentAircraft(){
      super(5, 5);
   }
   
